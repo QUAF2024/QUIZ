@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>QUAF 2024</title>
+            <style>
+                body {
+                    margin: 0;
+                    padding: 0;
+                    font-family: Arial, sans-serif;
+                    background:  white;
+                    text-align: center;
+                }
+                .container {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                }
+                .logo{
+                    margin-bottom: 30px;
+                    margin-top: 50px;
+                }
+                .logo img {
+                    width: 100px; /* Adjust logo size */
+                    margin: 0 auto;
+                }
+                h1 {
+                    font-size: 25px;
+                    color: black;
+                   
+                }
+                h2 {
+                    color: black;
+                }
+                p {
+                    color: #444;
+                }
+                li{
+                    font-size: 10px;
+                    text-align: left;
+                }
+                .second-line{
+
+                    display: block;
+                    color: #d48c1d;
+                }
+                .border{
+                    border: solid black;
+                    border-radius: 10px;
+                    width: 300px;
+                    
+                }
+                button {
+                    transition: all .5s ease;
+                    color: black;
+                    border: 4px solid #d48c1d;
+                    font-family: 'Montserrat', sans-serif;
+                    text-transform: uppercase;
+                    text-align: center;
+                    line-height: 1;
+                    font-size: 34px;
+                    background-color: transparent;
+                    padding: 10px;
+                    outline: none;
+                    border-radius: 4px;
+                    margin-bottom: 30px
+                }
+                button:hover {
+                    color: #d48c1d;
+                    background-color: black;
+                }
+                .terms-button {
+                    margin-top: 40px;
+                }
+                .check{
+                    text-align: left;
+                    margin-left: 10%;
+                }
+                .popup {
+                    display: none;
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background: #fff;
+                    padding: 40px;
+                    border: 1px solid #ccc;
+                    border-radius: 20px;
+                    z-index: 1000;
+                }
+                .overlay {
+                    display: none;
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgba(0, 0, 0, 0.5);
+                    z-index: 999;
+                }
+                                
+                .overlay-message{
+                    margin-top: 400px;
+                    font-size: 50px;
+                    background: #8d8b8b;
+                    border: solid black;
+                    border-radius: 10px;
+                    margin-left: 30px;
+                    margin-right: 30px;
+                    align-items: center;
+                    text-align: center;
+                }
+                #loadingScreen {
+                    background-color: #ffffff;
+                    display: none;
+                    position: fixed;
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                    height: 100vh;
+                    z-index: 9999;
+                }
+                .loader-wrapper {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    position: absolute; /* Position the wrapper absolutely */
+                    top: 0; /* Align wrapper to top */
+                    left: 0; /* Align wrapper to left */
+                    width: 100%; /* Set width to 100% viewport */
+                    height: 100%; /* Set height to 100% viewport */
+                 }
+                 .loader {
+                    border: 12px solid #dac29f;
+                    border-radius: 50%;
+                    border-top: 12px solid #d48c1d;
+                    border-bottom: 12px solid #d48c1d;
+                    width: 50px;
+                    height: 50px;
+                    -webkit-animation: spin 2s linear infinite;
+                    animation: spin 2s linear infinite;
+                  }
+                  
+                  @-webkit-keyframes spin {
+                    0% { -webkit-transform: rotate(0deg); }
+                    100% { -webkit-transform: rotate(360deg); }
+                  }
+                  
+                  @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                  }
+                  .progress-bar-container {
+                    margin-bottom: 20px;
+                    margin-top: 120px;
+                    width: 200px;
+                    margin-left: 30%;
+    display: flex;
+    align-items: center;
+    position: relative; /* Make the container relatively positioned */
+    z-index: 1; /* Set a higher z-index to ensure it appears above other elements */
+}
+
+.progress-bar {
+    height: 10px;
+    background-color: #e6cfae;
+    border-radius: 5px;
+    overflow: hidden;
+    flex: 1;
+    margin-right: 10px;
+    position: relative; /* Ensure that the progress bar is positioned relative to its container */
+}
+
+.progress-bar-value {
+    height: 100%;
+    background-color: #754702;
+    width: 0;
+    transition: width 0.5s ease-in-out;
+    position: absolute; /* Position the progress bar value absolutely within its container */
+    top: 0; /* Align to the top of the progress bar container */
+    left: 0; /* Align to the left of the progress bar container */
+    z-index: 2; /* Set a higher z-index to ensure it appears above other elements */
+}
+
+.timer {
+    font-size: 16px;
+    font-weight: bold;
+    position: relative; /* Ensure that the timer is positioned relative to its container */
+    z-index: 2; /* Set a higher z-index to ensure it appears above other elements */
+}
+
+.timer.color-change {
+    color: red;
+}
+
+@media (max-width: 720px) {
+    iframe{
+        width: 400px;
+        height: 720px;
+        margin: 0;
+        padding: 0;
+    }
+    .progress-bar-container{
+        margin-left: 20%;
+    }
+}
+            </style>
+        </head>
+        <body>
+            <!-- Intro Page -->
+            <div id="introPage" class="container">
+                <div class="logo">
+                    <img src="img/LOGO F.png" alt="Logo" class="center">
+                </div>
+                <h1>QUAF ONLINE MEGA <br><span class="second-line">QUIZ</span></h1>
+                <p>Thasqeefu Twalaba Association<br><br> Markazu Ssaqafathil Islamiyya <br> 📍Kundoor</p>
+                <button onclick="showTerms()">Go</button>
+            </div>
+  
+            <!-- Terms and Condition Page -->
+            <div id="termsPage" class="container" style="display: none;">
+                <div class="logo">
+                    <img src="img/LOGO F.png" alt="Logo">
+                </div>
+                <div class="border">
+                <h1>Terms and Conditions</h1>
+                <ul>
+                    <li>നിങ്ങൾക്ക് നൽകിയിട്ടുള്ള Quaf ID ഉപയോഗിച്ചാണ് മത്സരത്തിൽ പങ്കെടുക്കേണ്ടത്.</li>
+                    <li>ലിങ്കിൽ കയറിയാൽ അര മണിക്കൂർ (30 minutes) മാത്രമായിരിക്കും സമയം.</li>
+                    <li>30 മിനുട്ട് കഴിഞ്ഞാല്‍ submit ചെയ്യാനോ മറ്റൊന്നിനും സാധിക്കുന്നതല്ല.</li>
+                    <li>ക്വിസിൽ പ്രവേശിച്ചതിന് ശേഷം പേജ് റീലോഡ് ചെയ്താൽ മത്സരത്തിൽ പങ്കെടുക്കാൻ സാധിക്കുന്നതല്ല</li>
+                    <li>ഇന്റർനെറ്റ് ഇഷ്യൂകൾ കണ്ടറിഞ്ഞ് നെറ്റ്വർക്ക് ലഭിക്കുന്ന സ്ഥലത്തു നിന്ന് മാത്രം മത്സരത്തിൽ കയറുക.</li>
+                    <li>2 കാറ്റഗറിയായാണ് മത്സരം. <br>
+                        ഓപ്ഷന്,എഴുത്ത് എന്നീ രീതികളിലാണ് ചോദ്യം തയ്യാറാക്കിയിട്ടുള്ളത്.</li>
+                    <li>30 ചോദ്യമായിരിക്കും മത്സരത്തിൽ ഉണ്ടാവുക.</li>
+                    <li>ഒന്നിൽ കൂടുതൽ പ്രവേശനം സാധ്യമല്ല.</li>
+                    <li>സമയത്തിന് ശേഷം വരുന്ന പരാതികൾ പരിഗണിക്കുന്നതല്ല.</li>
+                </ul>
+                <div class="check"><input type="checkbox" id="agreeCheckbox"> I agree <br><br></div>
+                </div>
+                <button class="terms-button" onclick="startQuiz()" disabled>Start</button>
+            </div>
+  
+            <!-- Popup for Registration ID -->
+            <div id="popup" class="popup" style="display: none;">
+                <h2>Enter QUAF ID</h2>
+                <input type="text" id="registrationId" placeholder="Enter your QUAF ID"><br><br>
+                <button onclick="validateRegistrationId()">Submit</button>
+            </div>
+            <div id="overlay" class="overlay" style="display: none;"></div>
+            <div id="loadingScreen">
+            <div class="loader-wrapper">
+            <div class="loader"></div>
+            </div>
+            </div>
+  
+            <!-- Quiz Page -->
+            <div id="quizPage" class="container" style="display: none;">
+    <div class="progress-bar-container">
+        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-bar-value"></div>
+        </div>
+        <div class="timer">00:00</div>
+    </div>
+    <iframe id="quizFrame" src="formUrl" width="1280" height="500" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+    <div id="quizOverlay" class="overlay" style="display: none;">
+        <div id="overlayMessage" class="overlay-message"></div>
+    </div>
+</div>
+
+
+            <script>
+                document.getElementById('agreeCheckbox').addEventListener('change', function() {
+                    // Check if the checkbox is checked
+                    var isChecked = this.checked;
+                    // Find the start button
+                    var startButton = document.querySelector('.terms-button');
+                    // Enable or disable the start button based on the checkbox state
+                    startButton.disabled = !isChecked;
+                });
+  
+                function showTerms() {
+                    document.getElementById("introPage").style.display = "none";
+                    document.getElementById("termsPage").style.display = "block";
+                }
+  
+                function startQuiz() {
+                    if (document.getElementById("agreeCheckbox").checked) {
+                        document.getElementById("termsPage").style.display = "none";
+                        showPopup();
+                    } else {
+                        alert("Please agree to the terms and conditions.");
+                        return;
+                    }
+                }                
+  
+                function showPopup() {
+                    document.getElementById("overlay").style.display = "block";
+                    document.getElementById("popup").style.display = "block";
+                }
+  
+                function hidePopup() {
+                    document.getElementById("overlay").style.display = "none";
+                    document.getElementById("popup").style.display = "none";
+                }
+  
+                function showValidationLoading() {
+                    document.getElementById("loadingScreen").style.display = "block";
+                }
+            
+                function hideValidationLoading() {
+                    document.getElementById("loadingScreen").style.display = "none";
+                }
+
+                // Function to prefill the Google Form with registration ID
+                function prefillGoogleForm() {
+                // Get the registration ID from the input field
+                var registrationId = document.getElementById("registrationId").value;
+    
+                // Construct the URL with the registration ID
+                var formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSf4vnmC2nFeSzp8uLp8b0LWT-tcrErwLEJO4b9yKHYohKtK5g/viewform?embedded=true&entry.1189555778=" + encodeURIComponent(registrationId);
+    
+                // Set the URL as the src attribute of the iframe
+                document.getElementById("quizFrame").src = formUrl;
+                }
+  
+                function validateRegistrationId() {
+                    var registrationId = document.getElementById("registrationId").value;
+                
+                    if (!registrationId) {
+                        alert("Please enter your QUAF ID.");
+                        return;
+                    }
+                
+                    showValidationLoading();
+                
+                    fetch('https://script.google.com/macros/s/AKfycbzqRBvQDYD_faSgJzMZ37U6GyAu9JdaGGun5e0Nq-YnvCmc5UldH17yzBA1CK6GZjCm5g/exec?id=' + encodeURIComponent(registrationId))
+                        .then(response => response.json())
+                        .then(data => {
+                            hideValidationLoading();
+                            if (data.isValid) {
+                                hidePopup();
+                                document.getElementById("quizPage").style.display = "block";
+                                prefillGoogleForm();
+                                startTimer();
+                            } else {
+                                alert("Invalid QUAF ID. Or retake not allowed ");
+                            }
+                        })
+                        .catch(error => {
+                            hideValidationLoading();
+                            console.error('Error:', error);
+                        });
+                }
+                document.addEventListener('DOMContentLoaded', function() {
+    // Timer animation script
+    const progressBarValue = document.querySelector('.progress-bar-value');
+    const timerDisplay = document.querySelector('.timer');
+    let timeLeft = 30 * 60; // Set your desired time limit in seconds
+    const timerInterval = setInterval(updateTimer, 1000);
+
+    function updateTimer() {
+        timeLeft--;
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        const formattedTime = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        timerDisplay.textContent = formattedTime;
+
+        const progressWidth = (1 - timeLeft / (30 * 60)) * 100; // Calculate progress width
+        progressBarValue.style.width = progressWidth + '%';
+
+        if (timeLeft <= 5 * 60 ) { // 5 minutes remaining
+            timerDisplay.classList.add('color-change');
+        }
+
+        if (timeLeft === 0) {
+            clearInterval(timerInterval);
+            showTimeUpOverlay(); // Call the function to display the overlay when time is up
+        }
+    }
+
+    function showTimeUpOverlay() {
+        // Show the overlay and any relevant message when time is up
+        document.getElementById("quizOverlay").style.display = "block";
+        // Optionally, you can display a message to inform the user that the time is up
+        // You can customize this message based on your requirements
+        document.getElementById("overlayMessage").innerText = "Time's up!";
+    }
+  
+    // Your existing JavaScript code here
+});                          
+            </script>
+        </body>
+        </html>
